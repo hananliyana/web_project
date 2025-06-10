@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Restoran</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">🍴 <span>Restoran</span></div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="service.html">Service</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="pages.html">Pages</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <a class="book-btn" href="#">Book A Table</a>
+    </header>
+
+    <main class="cart-page">
+        <h1>Your Cart</h1>
+        <div class="cart-items">
+            <div class="cart-item">
+                <span class="item-name">Grilled Steak</span>
+                <input type="number" value="2" min="1" class="item-qty">
+                <span class="item-price">$19.99</span>
+                <button class="remove-btn">Remove</button>
+            </div>
+            <div class="cart-item">
+                <span class="item-name">Fresh Salad</span>
+                <input type="number" value="1" min="1" class="item-qty">
+                <span class="item-price">$9.99</span>
+                <button class="remove-btn">Remove</button>
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <h2>Total: $49.97</h2>
+            <a href="order_summary.html" class="cta-btn">Proceed to Checkout</a>
+        </div>
+    </main>
+</body>
+</html>

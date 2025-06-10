@@ -1,0 +1,121 @@
+/* style.css */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #111;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background-color: #000;
+    position: relative;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: orange;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li a[href*="cart"]::before {
+    content: "🛒 ";
+    margin-right: 4px;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+    color: orange;
+}
+
+.book-btn {
+    background-color: orange;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.book-btn:hover {
+    background-color: darkorange;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px;
+    background: url('background.jpg') no-repeat center center/cover;
+    position: relative;
+    min-height: 100vh;
+}
+
+.hero-text {
+    max-width: 50%;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #ccc;
+}
+
+.cta-btn {
+    background-color: orange;
+    padding: 12px 25px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.hero-image img {
+    width: 500px;
+    border-radius: 50%;
+    border: 5px solid orange;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-text,
+    .hero-image {
+        max-width: 100%;
+    }
+
+    .hero-image img {
+        width: 300px;
+    }
+}

@@ -1,0 +1,67 @@
+/* order_summary.css */
+
+.order-summary {
+    padding: 60px;
+    background-color: #1a1a1a;
+    color: white;
+    text-align: center;
+}
+
+.order-summary h1 {
+    font-size: 36px;
+    color: orange;
+    margin-bottom: 40px;
+}
+
+.order-items {
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    text-align: left;
+}
+
+.order-item {
+    background-color: #222;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.order-item h3 {
+    margin: 0 0 10px 0;
+    color: white;
+}
+
+.order-item p {
+    margin: 5px 0;
+    color: #ccc;
+}
+
+.order-total {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.order-total h2 {
+    margin-bottom: 20px;
+    color: orange;
+}
+
+.order-total .cta-btn {
+    background-color: orange;
+    padding: 12px 25px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.order-total .cta-btn:hover {
+    background-color: darkorange;
+}
