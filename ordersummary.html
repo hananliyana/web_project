@@ -18,33 +18,21 @@
                 <li><a href="cart.html">Cart</a></li>
             </ul>
         </nav>
-        <a class="book-btn" href="#">Book A Table</a>
+        <a class="book-btn" href="#">Order Now</a>
     </header>
 
     <main class="order-summary">
-        <h1>Order Summary</h1>
-        <div class="order-items">
-            <div class="order-item">
-                <h3>Grilled Steak</h3>
-                <p>Quantity: 2</p>
-                <p>Price: $39.98</p>
+        <div class="order-summary-box">
+            <h1>Order Summary</h1>
+            <div class="order-items">
+                <!-- Orders will be rendered here by JavaScript -->
             </div>
-            <div class="order-item">
-                <h3>BBQ Skewers</h3>
-                <p>Quantity: 1</p>
-                <p>Price: $14.99</p>
+            <div class="order-total">
+                <h2>Total: $0.00</h2>
+                <a href="confirmation.html" class="cta-btn">Proceed to Checkout</a>
             </div>
-            <div class="order-item">
-                <h3>Fresh Salad</h3>
-                <p>Quantity: 1</p>
-                <p>Price: $9.99</p>
-            </div>
-        </div>
-
-        <div class="order-total">
-            <h2>Total: $64.96</h2>
-            <a href="confirmation.html" class="cta-btn">Proceed to Checkout</a>
         </div>
     </main>
+    <script src="ordersummary.js"></script>
 </body>
 </html>
