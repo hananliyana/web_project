@@ -9,8 +9,8 @@ function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Menu page logic for plus/minus and add to cart
 document.addEventListener('DOMContentLoaded', function () {
+    // MENU PAGE: Plus/Minus and Add to Cart
     document.querySelectorAll('.menu-item').forEach(function(menuItem) {
         let qtyNumber = menuItem.querySelector('.qty-number');
         let minusBtn = menuItem.querySelector('.qty-btn.minus');
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let addBtn = menuItem.querySelector('.add-cart-btn');
         let qty = 1;
 
+        // Plus/Minus event handlers
         minusBtn.addEventListener('click', function() {
             if (qty > 1) {
                 qty--;
@@ -52,10 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Render cart page if present
     renderCartPage();
 });
 
-// Cart page logic
 function renderCartPage() {
     if (!document.querySelector('.cart-page')) return;
 
@@ -74,7 +75,7 @@ function renderCartPage() {
             div.innerHTML = `
                 <span class="item-name">${item.name}</span>
                 <input type="number" value="${item.qty}" min="1" class="item-qty" data-idx="${idx}">
-                <span class="item-price">$${(item.price * item.qty).toFixed(2)}</span>
+                <span class="item-price">RM${(item.price * item.qty).toFixed(2)}</span>
                 <button class="remove-btn" data-idx="${idx}">Remove</button>
             `;
             cartItemsElem.appendChild(div);
@@ -82,7 +83,7 @@ function renderCartPage() {
     }
 
     const summary = document.querySelector('.cart-summary h2');
-    if (summary) summary.textContent = `Total: $${total.toFixed(2)}`;
+    if (summary) summary.textContent = `Total: RM${total.toFixed(2)}`;
 
     cartItemsElem.querySelectorAll('.item-qty').forEach(input => {
         input.addEventListener('change', function () {
