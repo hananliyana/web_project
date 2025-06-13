@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🍴 DT Western Table Admin</div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="pendingorder.html" id="pending-orders-link">Pending Orders</a></li>
+                <li><a href="order_in_progress.html" id="order-in-progress-link">Orders In Progress</a></li>
+                <li><a href="order_to_pickup.html" id="order-to-pickup-link">Order To Pickup</a></li>
+                <li><a href="orderhistory.html" id="order-history-link">Order History</a></li>
+                <li><a href="all_orders.html" id="all-orders-link">All Orders</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome, Admin</h1>
+
+        <!-- 1. Summary Cards -->
+        <div class="summary-cards">
+            <div class="summary-card" style="border-color: orange;">
+                <span>158</span>
+                <div class="label">Total Orders Today</div>
+            </div>
+            <div class="summary-card pending">
+                <span>8</span>
+                <div class="label">Pending Orders</div>
+            </div>
+            <div class="summary-card inprogress">
+                <span>5</span>
+                <div class="label">Orders In Progress</div>
+            </div>
+            <div class="summary-card ready">
+                <span>3</span>
+                <div class="label">Ready for Pickup</div>
+            </div>
+            <div class="summary-card revenue">
+                <span>RM 1,920.50</span>
+                <div class="label">Total Revenue Today</div>
+            </div>
+        </div>
+
+        <!-- 2. Live Order Activity -->
+        <section class="activity-section">
+            <h2>Live Order Activity</h2>
+            <table class="activity-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                        <th>Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1234</td>
+                        <td>John D.</td>
+                        <td><span class="badge badge-inprogress">In Progress</span></td>
+                        <td>1:32 PM</td>
+                        <td><button class="action-btn">View/Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>#1235</td>
+                        <td>Sarah L.</td>
+                        <td><span class="badge badge-pending">Pending</span></td>
+                        <td>1:40 PM</td>
+                        <td><button class="action-btn">View/Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>#1236</td>
+                        <td>David T.</td>
+                        <td><span class="badge badge-ready">Ready for Pickup</span></td>
+                        <td>1:46 PM</td>
+                        <td><button class="action-btn">View/Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>#1233</td>
+                        <td>Emma S.</td>
+                        <td><span class="badge badge-completed">Completed</span></td>
+                        <td>1:25 PM</td>
+                        <td><button class="action-btn">View/Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

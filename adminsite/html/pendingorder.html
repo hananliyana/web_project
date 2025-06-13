@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Orders - Admin</title>
+    <link rel="stylesheet" href="../css/pendingorder.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🍴 DT Western Table Admin</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html" id="dashboard-link">Dashboard</a></li>
+                <li><a href="pendingorder.html" class="active">Pending Orders</a></li>
+                <li><a href="order_in_progress.html" id="order-in-progress-link">Orders In Progress</a></li>
+                <li><a href="order_to_pickup.html" id="order-to-pickup-link">Order To Pickup</a></li>
+                <li><a href="orderhistory.html" id="order-history-link">Order History</a></li>
+                <li><a href="all_orders.html" id="all-orders-link">All Orders</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Pending Orders</h1>
+
+        <!-- Filter and Sort Tools -->
+        <div class="tools-bar">
+            <input type="text" placeholder="Search by Order ID or Customer Name" class="search-input">
+            <select class="sort-select">
+                <option value="time">Sort by Time</option>
+                <option value="price">Sort by Price</option>
+                <option value="alpha">Sort by Customer (A-Z)</option>
+            </select>
+        </div>
+
+        <!-- Pending Orders Table -->
+        <form id="pending-orders-form">
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Items</th>
+                    <th>Total (RM)</th>
+                    <th>Order Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example Row 1 -->
+                <tr>
+                    <td>#1245</td>
+                    <td>John Doe</td>
+                    <td>2x Burger, 1x Fries</td>
+                    <td>25.97</td>
+                    <td>1:15 PM</td>
+                    <td>
+                        <button type="button" class="view-btn" data-order="1245">View</button>
+                        <button type="button" class="accept-btn">Accept</button>
+                        <button type="button" class="cancel-btn">Cancel</button>
+                    </td>
+                </tr>
+                <!-- Example Row 2 -->
+                <tr>
+                    <td>#1246</td>
+                    <td>Alice M.</td>
+                    <td>1x Steak</td>
+                    <td>19.99</td>
+                    <td>1:17 PM</td>
+                    <td>
+                        <button type="button" class="view-btn" data-order="1246">View</button>
+                        <button type="button" class="accept-btn">Accept</button>
+                        <button type="button" class="cancel-btn">Cancel</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </form>
+    </main>
+
+    <!-- Order Detail Modal -->
+    <div class="modal-overlay" id="modal-overlay" style="display:none;">
+        <div class="modal" id="order-modal">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h2>Order Details - <span id="modal-order-id"></span></h2>
+            <div class="modal-content">
+                <div class="modal-section">
+                    <strong>Customer Info:</strong>
+                    <div id="modal-customer-info">John Doe</div>
+                </div>
+                <div class="modal-section">
+                    <strong>Items:</strong>
+                    <ul id="modal-items-list">
+                        <li>2x Burger - RM12.99</li>
+                        <li>1x Fries - RM5.99</li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <strong>Special Instructions:</strong>
+                    <div id="modal-instructions">No onions</div>
+                </div>
+                <div class="modal-section">
+                    <strong>Payment Method:</strong>
+                    <div id="modal-payment">Cashless</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- For demo: Minimal modal JS (optional for real integration with backend) -->
+    <script>
+        // Modal functionality for demo
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.onclick = function() {
+                document.getElementById('modal-overlay').style.display = 'flex';
+                // You would dynamically fill modal here using data-order attribute
+                document.getElementById('modal-order-id').textContent = '#' + btn.dataset.order;
+            }
+        });
+        document.getElementById('close-modal').onclick = function() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        };
+    </script>
+</body>
+</html>

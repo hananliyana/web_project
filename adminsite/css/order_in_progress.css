@@ -1,0 +1,287 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #1b1b1b;
+    color: #fff;
+}
+
+header {
+    background-color: #000;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    color: orange;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 18px;
+    background-color: orange;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.2s;
+}
+
+nav a.active {
+    background-color: #fff;
+    color: orange;
+    border: 2px solid orange;
+    font-weight: 700;
+    box-shadow: 0 0 10px orange;
+}
+
+nav a:hover {
+    background-color: #ffb84d;
+    transform: scale(1.05);
+}
+
+main {
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+main h1 {
+    font-size: 2rem;
+    color: orange;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+/* Tools Bar */
+.tools-bar {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.tools-bar .search-input {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+    width: 260px;
+    background: #222;
+    color: #fff;
+    box-shadow: 0 2px 8px #10101033;
+}
+
+/* Orders Table */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #222;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+    margin-bottom: 38px;
+}
+
+.orders-table th, .orders-table td {
+    padding: 14px 10px;
+    text-align: center;
+}
+
+.orders-table th {
+    background-color: #272727;
+    color: orange;
+    font-weight: 700;
+    border-bottom: 2px solid #333;
+}
+
+.orders-table tr:nth-child(even) {
+    background-color: #232323;
+}
+
+.orders-table tr:nth-child(odd) {
+    background-color: #1c1c1c;
+}
+
+.orders-table td {
+    vertical-align: middle;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.badge-preparing {
+    background-color: #ffd600;
+    color: #222;
+}
+.badge-cooking {
+    background-color: #ff9800;
+    color: #fff;
+}
+.badge-ready {
+    background-color: #00c853;
+    color: #fff;
+}
+
+.mark-ready-btn {
+    background: #00c853;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 15px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.mark-ready-btn:hover {
+    background: #009624;
+}
+
+/* Kitchen Compact Cards */
+.kitchen-section {
+    margin-top: 0;
+}
+
+.kitchen-section h2 {
+    color: orange;
+    font-size: 1.15rem;
+    margin-bottom: 16px;
+    margin-left: 4px;
+    font-weight: 600;
+}
+
+.order-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: flex-start;
+}
+
+.order-card {
+    background: #232323;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.22);
+    padding: 18px 20px 14px 20px;
+    min-width: 250px;
+    max-width: 285px;
+    flex: 1 1 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.order-info {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.order-id {
+    font-weight: 600;
+    color: orange;
+    font-size: 1.12rem;
+}
+
+.customer-name {
+    font-size: 1.02rem;
+    color: #fff;
+}
+
+.items {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.time-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.elapsed {
+    background: #363636;
+    color: #ffc107;
+    border-radius: 8px;
+    padding: 3px 10px;
+    font-size: 1.01rem;
+    font-weight: 600;
+}
+
+.status-dropdown {
+    border-radius: 6px;
+    border: none;
+    background: #181818;
+    color: orange;
+    font-weight: 600;
+    font-size: 1.01rem;
+    padding: 4px 10px;
+}
+
+.card-ready-btn {
+    background: #00c853;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 15px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    align-self: flex-end;
+}
+.card-ready-btn:hover {
+    background: #009624;
+}
+
+@media (max-width: 900px) {
+    .order-cards {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    .order-card {
+        max-width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 700px) {
+    main {
+        padding: 20px 5px;
+    }
+    .orders-table th, .orders-table td {
+        padding: 9px 3px;
+        font-size: 0.97rem;
+    }
+    .tools-bar {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+}
