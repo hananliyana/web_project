@@ -2,6 +2,7 @@ body {
     background-color: #1a1a1a;
 }
 
+
 .order-summary {
     min-height: 100vh;
     display: flex;
@@ -12,6 +13,7 @@ body {
     color: white;
     padding: 0;
 }
+
 
 .order-summary-box {
     background: #222;
@@ -26,6 +28,7 @@ body {
     align-items: center;
 }
 
+
 .order-summary-box h1 {
     font-size: 32px;
     color: orange;
@@ -34,6 +37,7 @@ body {
     font-weight: bold;
 }
 
+
 .order-items {
     width: 100%;
     margin-bottom: 32px;
@@ -41,6 +45,7 @@ body {
     flex-direction: column;
     gap: 18px;
 }
+
 
 .order-item {
     background-color: #292929;
@@ -52,6 +57,7 @@ body {
     align-items: flex-start;
 }
 
+
 .order-item h3 {
     margin: 0 0 8px 0;
     color: #fff;
@@ -59,11 +65,13 @@ body {
     font-weight: 600;
 }
 
+
 .order-item p {
     margin: 2px 0;
     color: #ccc;
     font-size: 15px;
 }
+
 
 .order-total {
     width: 100%;
@@ -77,6 +85,7 @@ body {
     gap: 18px;
 }
 
+
 .order-total h2 {
     margin: 0 0 8px 0;
     color: orange;
@@ -84,6 +93,7 @@ body {
     text-align: center;
     font-weight: bold;
 }
+
 
 .order-total .cta-btn {
     background-color: orange;
@@ -101,9 +111,11 @@ body {
     border: none;
 }
 
+
 .order-total .cta-btn:hover {
     background-color: darkorange;
 }
+
 
 /* Responsive for mobile */
 @media (max-width: 600px) {

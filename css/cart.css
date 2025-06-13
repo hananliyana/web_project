@@ -1,5 +1,6 @@
 /* cart.css */
 
+
 .cart-page {
     padding: 60px;
     background-color: #1a1a1a;
@@ -7,17 +8,20 @@
     text-align: center;
 }
 
+
 .cart-page h1 {
     font-size: 36px;
     color: orange;
     margin-bottom: 40px;
 }
 
+
 .cart-items {
     max-width: 700px;
     margin: 0 auto 40px auto;
     text-align: left;
 }
+
 
 .cart-item {
     display: flex;
@@ -30,11 +34,13 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+
 .cart-item .item-name {
     flex: 2;
     font-weight: bold;
     color: white;
 }
+
 
 .cart-item .item-qty {
     width: 60px;
@@ -46,11 +52,13 @@
     color: white;
 }
 
+
 .cart-item .item-price {
     flex: 1;
     color: orange;
     text-align: right;
 }
+
 
 .cart-item .remove-btn {
     background-color: red;
@@ -62,9 +70,11 @@
     transition: background-color 0.3s;
 }
 
+
 .cart-item .remove-btn:hover {
     background-color: darkred;
 }
+
 
 .cart-summary {
     max-width: 700px;
@@ -76,10 +86,12 @@
     text-align: center;
 }
 
+
 .cart-summary h2 {
     color: orange;
     margin-bottom: 20px;
 }
+
 
 .cart-summary .cta-btn {
     background-color: orange;
@@ -90,6 +102,7 @@
     font-weight: bold;
     transition: background-color 0.3s;
 }
+
 
 .cart-summary .cta-btn:hover {
     background-color: darkorange;

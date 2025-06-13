@@ -1,13 +1,16 @@
 // --- Cart Logic for Menu and Cart Pages ---
 
+
 function getCart() {
     const cart = localStorage.getItem('cart');
     return cart ? JSON.parse(cart) : [];
 }
 
+
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     // MENU PAGE: Plus/Minus and Add to Cart
@@ -18,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let addBtn = menuItem.querySelector('.add-cart-btn');
         let qty = 1;
 
+
         // Plus/Minus event handlers
         minusBtn.addEventListener('click', function() {
             if (qty > 1) {
@@ -26,15 +30,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+
         plusBtn.addEventListener('click', function() {
             qty++;
             qtyNumber.textContent = qty;
         });
 
+
         addBtn.addEventListener('click', function () {
             const name = menuItem.getAttribute('data-name');
             const price = parseFloat(menuItem.getAttribute('data-price'));
             const img = menuItem.getAttribute('data-img');
+
 
             let cart = getCart();
             const existing = cart.find(item => item.name === name);
@@ -45,25 +52,31 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             saveCart(cart);
 
+
             // Reset to 1 for better UX
             qty = 1;
             qtyNumber.textContent = qty;
+
 
             alert(`${qty} x ${name} added to cart!`);
         });
     });
 
+
     // Render cart page if present
     renderCartPage();
 });
 
+
 function renderCartPage() {
     if (!document.querySelector('.cart-page')) return;
+
 
     const cartItemsElem = document.querySelector('.cart-items');
     let cart = getCart();
     let total = 0;
     cartItemsElem.innerHTML = '';
+
 
     if (cart.length === 0) {
         cartItemsElem.innerHTML = '<p>Your cart is empty.</p>';
@@ -82,8 +95,10 @@ function renderCartPage() {
         });
     }
 
+
     const summary = document.querySelector('.cart-summary h2');
     if (summary) summary.textContent = `Total: RM${total.toFixed(2)}`;
+
 
     cartItemsElem.querySelectorAll('.item-qty').forEach(input => {
         input.addEventListener('change', function () {
@@ -96,6 +111,7 @@ function renderCartPage() {
         });
     });
 
+
     cartItemsElem.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const idx = +this.getAttribute('data-idx');
@@ -105,3 +121,4 @@ function renderCartPage() {
         });
     });
 }
+
