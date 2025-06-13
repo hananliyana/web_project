@@ -1,0 +1,39 @@
+.confirmation {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #eee;
+    text-align: center;
+}
+#receipt {
+    margin: 24px 0;
+    text-align: left;
+}
+#receipt table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+#receipt th, #receipt td {
+    border-bottom: 1px solid #eee;
+    padding: 8px 6px;
+    text-align: left;
+}
+#receipt tfoot td {
+    border-top: 2px solid #333;
+    font-weight: bold;
+    background: #fafafa;
+}
+.cta-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff6347;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 18px;
+    font-size: 1rem;
+}

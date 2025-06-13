@@ -4,31 +4,44 @@ function getCart() {
     return cart ? JSON.parse(cart) : [];
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const cart = getCart();
+function renderOrderSummary() {
     const orderItemsElem = document.querySelector('.order-items');
-    const totalElem = document.querySelector('.order-total h2');
-
+    const orderTotalElem = document.getElementById('order-total-rm');
+    let cart = getCart();
     let total = 0;
+
     orderItemsElem.innerHTML = '';
 
     if (cart.length === 0) {
-        orderItemsElem.innerHTML = '<p style="text-align:center;color:#ccc;">Your cart is empty.</p>';
-        totalElem.textContent = 'Total: $0.00';
-    } else {
-        cart.forEach(item => {
-            const price = item.price * item.qty;
-            total += price;
+        orderItemsElem.innerHTML = '<p>Your cart is empty.</p>';
+        orderTotalElem.textContent = "Total: RM0.00";
+        return;
+    }
 
-            const div = document.createElement('div');
-            div.className = 'order-item';
-            div.innerHTML = `
-                <h3>${item.name}</h3>
-                <p>Quantity: ${item.qty}</p>
-                <p>Price: $${price.toFixed(2)}</p>
-            `;
-            orderItemsElem.appendChild(div);
+    cart.forEach(item => {
+        total += item.price * item.qty;
+        const div = document.createElement('div');
+        div.className = 'order-item';
+        div.innerHTML = `
+            <span class="item-name">${item.name}</span>
+            <span class="item-qty">x${item.qty}</span>
+            <span class="item-price">RM${(item.price * item.qty).toFixed(2)}</span>
+        `;
+        orderItemsElem.appendChild(div);
+    });
+
+    orderTotalElem.textContent = `Total: RM${total.toFixed(2)}`;
+}
+
+// Before submitting form, include cart as JSON in hidden input
+document.addEventListener('DOMContentLoaded', function() {
+    renderOrderSummary();
+    const form = document.getElementById('checkout-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const cart = getCart();
+            document.getElementById('orderData').value = JSON.stringify(cart);
+            // Optionally: localStorage.removeItem('cart'); // Clear cart after order
         });
-        totalElem.textContent = `Total: $${total.toFixed(2)}`;
     }
 });
