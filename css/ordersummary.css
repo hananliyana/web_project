@@ -1,70 +1,67 @@
 body {
     background-color: #1a1a1a;
+    margin: 0;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 }
-
 
 .order-summary {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    background-color: #1a1a1a;
-    color: white;
-    padding: 0;
+    align-items: flex-start;
+    background: #1a1a1a;
+    padding-top: 40px;
 }
 
-
-.order-summary-box {
+.order-summary-card {
     background: #222;
-    border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-    max-width: 430px;
-    width: 95vw;
-    margin: 0 auto;
-    padding: 32px 28px;
+    color: #fff;
+    max-width: 700px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    margin: 0 auto 40px auto;
+    padding: 0 0 30px 0;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-
-.order-summary-box h1 {
-    font-size: 32px;
+.order-summary-card h1 {
+    font-size: 36px;
     color: orange;
-    margin-bottom: 28px;
-    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 40px;
     font-weight: bold;
+    text-align: center;
 }
-
 
 .order-items {
-    width: 100%;
-    margin-bottom: 32px;
+    width: 90%;
+    margin: 0 auto 28px auto;
+    background: none;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
 }
-
 
 .order-item {
     background-color: #292929;
-    padding: 15px 20px;
-    border-radius: 10px;
+    padding: 12px 18px;
+    border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
 }
-
 
 .order-item h3 {
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
     color: #fff;
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 600;
 }
-
 
 .order-item p {
     margin: 2px 0;
@@ -72,62 +69,107 @@ body {
     font-size: 15px;
 }
 
-
-.order-total {
-    width: 100%;
-    background-color: #333;
-    padding: 26px 18px 18px 18px;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+#checkout-form {
+    width: 90%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 18px;
+    background: none;
 }
 
+.form-group label {
+    font-weight: 600;
+    color: orange;
+    display: block;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 9px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #191919;
+    color: #fff;
+    margin-bottom: 12px;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: orange;
+}
+
+.order-total {
+    background-color: #2a2a2a;
+    padding: 18px 0 12px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    margin-top: 8px;
+    margin-bottom: 12px;
+    text-align: center;
+}
 
 .order-total h2 {
-    margin: 0 0 8px 0;
     color: orange;
     font-size: 24px;
-    text-align: center;
+    margin: 0 0 8px 0;
     font-weight: bold;
 }
 
-
-.order-total .cta-btn {
+.cta-btn {
+    display: inline-block;
+    padding: 12px 25px;
     background-color: orange;
-    padding: 14px 0;
     color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 18px;
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 8px;
-    transition: background-color 0.3s;
     border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px auto 0 auto;
+    transition: background-color 0.3s;
+    width: 100%;
 }
 
-
-.order-total .cta-btn:hover {
+.cta-btn:hover {
     background-color: darkorange;
 }
 
+#qrSection img {
+    display: block;
+    margin: 8px 0;
+    border: 3px solid #444;
+    border-radius: 10px;
+    background: #fff;
+    padding: 6px;
+    max-width: 150px;
+}
 
-/* Responsive for mobile */
-@media (max-width: 600px) {
-    .order-summary-box {
-        max-width: 99vw;
-        padding: 18px 4vw;
+#qrSection p {
+    color: #7cff7c;
+    margin-top: 14px;
+    font-weight: bold;
+    text-align: left;
+    font-size: 15px;
+}
+
+@media (max-width: 800px) {
+    .order-summary-card {
+        max-width: 98vw;
     }
-    .order-summary {
+    .order-items,
+    #checkout-form {
+        width: 98%;
         padding: 0;
-    }
-    .order-total, .order-items {
-        padding-left: 0;
-        padding-right: 0;
     }
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Summary - Restoran</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/order_summary.css">
+    <link rel="stylesheet" href="../css/ordersummary.css">
 </head>
 <body>
     <header class="navbar">
@@ -21,14 +21,13 @@
         <a class="book-btn" href="#">Order Now</a>
     </header>
 
-
     <main class="order-summary">
-        <div class="order-summary-box">
+        <div class="order-summary-card">
             <h1>Order Summary</h1>
             <div class="order-items">
                 <!-- Orders will be rendered here by JavaScript -->
             </div>
-            <form id="checkout-form">
+            <form id="checkout-form" method="post" action="../php/submit_order.php" autocomplete="off">
                 <div class="form-group">
                     <label for="custName">Name:</label>
                     <input type="text" id="custName" name="custName" required>
@@ -54,10 +53,10 @@
                 </div>
                 <div class="form-group" id="qrSection" style="display:none;">
                     <label>Scan to Pay (QR Code):</label>
-                    <img src="../images/your_qr.png" alt="QR Code" style="max-width:150px;">
+                    <img src="../images/your_qr.png" alt="QR Code">
                     <p>After payment, please click Confirm & Pay.</p>
                 </div>
-                <input type="hidden" id="orderData" name="orderData">
+                <input type="hidden" id="orderData" name="orderData" />
                 <div class="order-total">
                     <h2 id="order-total-rm">Total: RM0.00</h2>
                 </div>
@@ -66,21 +65,5 @@
         </div>
     </main>
     <script src="../javascript/ordersummary.js"></script>
-    <script>
-    // Payment method logic
-    document.addEventListener('DOMContentLoaded', function() {
-        var paySelect = document.getElementById('paymentMethod');
-        var qrSection = document.getElementById('qrSection');
-        paySelect.addEventListener('change', function() {
-            if (this.value === "qr") {
-                qrSection.style.display = "block";
-            } else {
-                qrSection.style.display = "none";
-            }
-        });
-        // Trigger change on load in case select is pre-filled
-        paySelect.dispatchEvent(new Event('change'));
-    });
-    </script>
 </body>
 </html>

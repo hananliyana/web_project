@@ -27,7 +27,74 @@
     <footer>
         <p>&copy; 2025 Restoran | All Rights Reserved</p>
     </footer>
-    <script src="../javascript/confirmation.js"></script>
+    <script>
+    // Get order_id from URL
+    function getOrderId() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('order_id');
+    }
+
+    function renderReceipt(data) {
+        if (data.error) {
+            document.getElementById('receipt').innerHTML = `<p>${data.error}</p>`;
+            return;
+        }
+        const order = data.order;
+        const items = data.order_items;
+        let html = `
+            <div class="receipt-details">
+                <p><strong>Name:</strong> ${order.customer_name}</p>
+                <p><strong>Email:</strong> ${order.customer_email}</p>
+                <p><strong>Pickup Time:</strong> ${order.pickup_time}</p>
+                <p><strong>Payment Method:</strong> ${order.payment_method}</p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        items.forEach(item => {
+            html += `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>RM${parseFloat(item.price).toFixed(2)}</td>
+                    <td>RM${(item.price * item.quantity).toFixed(2)}</td>
+                </tr>
+            `;
+        });
+        html += `
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">Total</td>
+                        <td>RM${parseFloat(order.total_amount).toFixed(2)}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        `;
+        document.getElementById('receipt').innerHTML = html;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const order_id = getOrderId();
+        if (!order_id) {
+            document.getElementById('receipt').innerHTML = "<p>No order ID provided.</p>";
+            return;
+        }
+        fetch(`../php/confirmation.php?order_id=${encodeURIComponent(order_id)}`)
+            .then(response => response.json())
+            .then(data => renderReceipt(data))
+            .catch(() => {
+                document.getElementById('receipt').innerHTML = "<p>Failed to load order details.</p>";
+            });
+    });
+    </script>
 </body>
 </html>
-
