@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History - Admin</title>
+    <link rel="stylesheet" href="../css/orderhistory.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🍴 DT Western Table Admin</div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html" id="dashboard-link">Dashboard</a></li>
+                <li><a href="pendingorder.html" id="pending-orders-link">Pending Orders</a></li>
+                <li><a href="order_in_progress.html" id="order-in-progress-link">Orders In Progress</a></li>
+                <li><a href="order_to_pickup.html" id="order-to-pickup-link">Order To Pickup</a></li>
+                <li><a href="orderhistory.html" class="active">Order History</a></li>
+                <li><a href="all_orders.html" id="all-orders-link">All Orders</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Completed Orders</h1>
+
+        <!-- Filters & Tools -->
+        <div class="tools-bar">
+<div class="date-filter">
+    <label for="date-filter" class="date-label">📅</label>
+    <div class="custom-select-wrapper">
+        <select id="date-filter" class="custom-select">
+            <option value="today">Today</option>
+            <option value="last7">Last 7 Days</option>
+        </select>
+        <span class="select-arrow">&#9662;</span>
+    </div>
+</div>
+            <input type="text" class="search-input" placeholder="Search by Order ID, Customer Name, or Payment Method">
+            <select class="sort-select">
+                <option value="date">Sort by Date</option>
+                <option value="price">Sort by Price</option>
+                <option value="type">Sort by Order Type</option>
+            </select>
+        </div>
+
+        <!-- Completed Orders Table -->
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User ID</th>
+                    <th>Staff ID</th>
+                    <th>Order Type</th>
+                    <th>Total Amount</th>
+                    <th>Payment Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example Row 1 -->
+                <tr>
+                    <td>#1240</td>
+                    <td>Hana F.</td>
+                    <td>1x Burger, 1x Drink</td>
+                    <td>1:10 PM</td>
+                    <td>18.50</td>
+                    <td>Online</td>
+                    <td>Touch ’n Go</td>
+                    <td>
+                        <button type="button" class="view-details-btn" data-order="1240">View Details</button>
+                    </td>
+                </tr>
+                <!-- Example Row 2 -->
+                <tr>
+                    <td>#1239</td>
+                    <td>Amir R.</td>
+                    <td>2x Pasta</td>
+                    <td>1:00 PM</td>
+                    <td>22.00</td>
+                    <td>Walk-in</td>
+                    <td>Cash</td>
+                    <td>
+                        <button type="button" class="view-details-btn" data-order="1239">View Details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <!-- View Details Modal -->
+    <div class="modal-overlay" id="modal-overlay" style="display:none;">
+        <div class="modal" id="order-modal">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h2>Order Details - <span id="modal-order-id"></span></h2>
+            <div class="modal-content">
+                <div class="modal-section">
+                    <strong>Items:</strong>
+                    <ul id="modal-items-list">
+                        <li>1x Burger - RM10.00</li>
+                        <li>1x Drink - RM8.50</li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <strong>Time Taken To Complete:</strong>
+                    <div id="modal-time-taken">20 mins</div>
+                </div>
+                <div class="modal-section">
+                    <strong>Customer Notes:</strong>
+                    <div id="modal-notes">No ice in drink</div>
+                </div>
+                <div class="modal-section">
+                    <strong>Payment Method:</strong>
+                    <div id="modal-payment">Touch ’n Go</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal Modal JS -->
+    <script>
+        document.querySelectorAll('.view-details-btn').forEach(btn => {
+            btn.onclick = function() {
+                document.getElementById('modal-overlay').style.display = 'flex';
+                document.getElementById('modal-order-id').textContent = '#' + btn.dataset.order;
+                // For demo: static details. In real use, fill modal with order data.
+            }
+        });
+        document.getElementById('close-modal').onclick = function() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        };
+    </script>
+</body>
+</html>

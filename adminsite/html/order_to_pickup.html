@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready for Pickup - Admin</title>
+    <link rel="stylesheet" href="../css/order_to_pickup.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🍴 DT Western Table Admin</div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html" id="dashboard-link">Dashboard</a></li>
+                <li><a href="pendingorder.html" id="pending-orders-link">Pending Orders</a></li>
+                <li><a href="order_in_progress.html" id="order-in-progress-link">Orders In Progress</a></li>
+                <li><a href="order_to_pickup.html" class="active">Order To Pickup</a></li>
+                <li><a href="orderhistory.html" id="order-history-link">Order History</a></li>
+                <li><a href="all_orders.html" id="all-orders-link">All Orders</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Ready for Pickup</h1>
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Item ID</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Waiting Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Will be populated by JS -->
+            </tbody>
+        </table>
+    </main>
+    <script src="../javascript/ordertopickup.js"></script>
+</body>
+</html>

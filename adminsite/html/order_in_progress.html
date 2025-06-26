@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders In Progress - Admin</title>
+    <link rel="stylesheet" href="../css/order_in_progress.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🍴 DT Western Table Admin</div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html" id="dashboard-link">Dashboard</a></li>
+                <li><a href="pendingorder.html" id="pending-orders-link">Pending Orders</a></li>
+                <li><a href="order_in_progress.html" class="active">Orders In Progress</a></li>
+                <li><a href="order_to_pickup.html" id="order-to-pickup-link">Order To Pickup</a></li>
+                <li><a href="orderhistory.html" id="order-history-link">Order History</a></li>
+                <li><a href="all_orders.html" id="all-orders-link">All Orders</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Orders In Progress</h1>
+
+        <!-- Search & Filter -->
+        <div class="tools-bar">
+            <input type="text" placeholder="Search by Order ID or Customer Name" class="search-input">
+        </div>
+
+        <!-- Table View -->
+        <section class="table-section">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>User ID</th>
+                        <th>Staff ID</th>
+                        <th>Table ID</th>
+                        <th>Order Time</th>
+                        <th>Status</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Will be populated by JS -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="../javascript/orderinprogress.js"></script>
+</body>
+</html>
