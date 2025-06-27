@@ -1,7 +1,7 @@
 <?php
 require_once("dbConnection.php");
 
-// ENABLE ERROR REPORTING FOR DEBUGGING (remove for production)
+// DEBUGGING ENABLED
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -13,66 +13,80 @@ $pickup_time      = $_POST['pickupTime'] ?? '';
 $customer_address = $_POST['address'] ?? '';
 $payment_method   = $_POST['paymentMethod'] ?? '';
 $orderData        = $_POST['orderData'] ?? '';
-$orderItems       = json_decode($orderData, true);
+$orderitem       = json_decode($orderData, true);
 $order_time       = date("Y-m-d H:i:s");
 $status           = "pending";
 $order_type       = "online";
 
+// Validate order items
+if (!$orderitem || !is_array($orderitem) || count($orderitem) === 0) {
+    echo json_encode(['error' => 'No items in order or invalid cart data.']);
+    exit;
+}
+
 // Calculate total amount
 $total_amount = 0;
-foreach ($orderItems as $item) {
+foreach ($orderitem as $item) {
+    if (!isset($item['price'], $item['qty'])) {
+        echo json_encode(['error' => 'Missing item data in cart.']);
+        exit;
+    }
     $total_amount += $item['price'] * $item['qty'];
 }
 
-// Insert order with customer info and payment method
-$user_id  = null; // Set if user is logged in, otherwise NULL
+// Insert order into `order` table (use backticks!)
+$user_id = null;
 $staff_id = null;
 $table_id = null;
 
 $stmt = $conn->prepare("INSERT INTO `order` 
     (user_id, staff_id, table_id, order_type, order_time, pickup_time, status, total_amount, customer_name, customer_email, customer_address, payment_method) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
 if (!$stmt) {
-    die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+    echo json_encode(['error' => 'Order insert prepare failed: ' . $conn->error]);
+    exit;
 }
+
 $stmt->bind_param(
     "iiissssdssss", 
     $user_id, $staff_id, $table_id, $order_type, $order_time, $pickup_time, $status, $total_amount, 
     $customer_name, $customer_email, $customer_address, $payment_method
 );
+
 if (!$stmt->execute()) {
-    die("Order Insert failed: (" . $stmt->errno . ") " . $stmt->error);
+    echo json_encode(['error' => 'Order insert execute failed: ' . $stmt->error]);
+    exit;
 }
 $order_id = $stmt->insert_id;
 $stmt->close();
 
-// Insert order items (orderitem table)
+// Insert each item into orderitem table
 foreach ($orderItems as $item) {
-    $menuitem_id = $item['menuitem_id'] ?? null;
-    if (!$menuitem_id && !empty($item['name'])) {
-        $stmt = $conn->prepare("SELECT item_id FROM menuitem WHERE name = ? LIMIT 1");
-        $stmt->bind_param("s", $item['name']);
-        $stmt->execute();
-        $stmt->bind_result($menuitem_id);
-        $stmt->fetch();
-        $stmt->close();
+    $item_id = $item['item_id'] ?? null; // changed from 'id' to 'item_id'
+    $quantity = $item['qty'];
+    $subtotal = $item['price'] * $quantity;
+
+    if (!$item_id) {
+        echo json_encode(['error' => 'Missing menu item ID.']);
+        exit;
     }
 
-    if ($menuitem_id) {
-        $itemPrice = $item['price'] * $item['qty']; // subtotal
-        $stmt = $conn->prepare("INSERT INTO orderitem (order_id, item_id, quantity, subtotal) VALUES (?, ?, ?, ?)");
-        if (!$stmt) {
-            die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-        }
-        $stmt->bind_param("iiid", $order_id, $menuitem_id, $item['qty'], $itemPrice);
-        if (!$stmt->execute()) {
-            die("OrderItem Insert failed: (" . $stmt->errno . ") " . $stmt->error);
-        }
-        $stmt->close();
+    $stmt = $conn->prepare("INSERT INTO orderitem (order_id, item_id, quantity, subtotal) VALUES (?, ?, ?, ?)");
+    if (!$stmt) {
+        echo json_encode(['error' => 'Order item prepare failed: ' . $conn->error]);
+        exit;
     }
-} // <-- This closes the foreach loop
 
-// Send email receipt to customer (optional)
+    $stmt->bind_param("iiid", $order_id, $item_id, $quantity, $subtotal);
+    if (!$stmt->execute()) {
+        echo json_encode(['error' => 'Order item insert failed: ' . $stmt->error]);
+        exit;
+    }
+    $stmt->close();
+}
+
+// OPTIONAL: Email receipt
 $subject = "Restoran Order Receipt";
 $message = "Thank you for your order!\n\n";
 $message .= "Order Date: $order_time\n";
@@ -86,9 +100,9 @@ foreach ($orderItems as $item) {
 }
 $message .= "\nTotal: RM" . number_format($total_amount, 2);
 
-// mail($customer_email, $subject, $message); // Uncomment to send email
+// mail($customer_email, $subject, $message); // optional
 
-// Redirect to a PHP confirmation page with order_id for displaying the receipt
-header("Location: ../php/confirmation.php?order_id=" . urlencode($order_id));
-exit();
+// Respond with order_id
+echo json_encode(['order_id' => $order_id]);
+exit;
 ?>
