@@ -6,27 +6,29 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Get POST data
-$customer_name    = $_POST['custName'] ?? '';
-$customer_email   = $_POST['email'] ?? '';
-$pickup_time      = $_POST['pickupTime'] ?? '';
-$customer_address = $_POST['address'] ?? '';
-$payment_method   = $_POST['paymentMethod'] ?? '';
-$orderData        = $_POST['orderData'] ?? '';
-$orderitem       = json_decode($orderData, true);
+// Read JSON input
+$data = json_decode(file_get_contents('php://input'), true);
+
+// Check and extract order data
+$customer_name    = $data['custName'] ?? '';
+$customer_email   = $data['email'] ?? '';
+$pickup_time      = $data['pickupTime'] ?? '';
+$customer_address = $data['address'] ?? '';
+$payment_method   = $data['paymentMethod'] ?? '';
+$orderItems       = $data['cart'] ?? [];
 $order_time       = date("Y-m-d H:i:s");
 $status           = "pending";
 $order_type       = "online";
 
 // Validate order items
-if (!$orderitem || !is_array($orderitem) || count($orderitem) === 0) {
+if (!$orderItems || !is_array($orderItems) || count($orderItems) === 0) {
     echo json_encode(['error' => 'No items in order or invalid cart data.']);
     exit;
 }
 
 // Calculate total amount
 $total_amount = 0;
-foreach ($orderitem as $item) {
+foreach ($orderItems as $item) {
     if (!isset($item['price'], $item['qty'])) {
         echo json_encode(['error' => 'Missing item data in cart.']);
         exit;
@@ -63,7 +65,7 @@ $stmt->close();
 
 // Insert each item into orderitem table
 foreach ($orderItems as $item) {
-    $item_id = $item['item_id'] ?? null; // changed from 'id' to 'item_id'
+    $item_id = $item['item_id'] ?? null; // Should match your cart key
     $quantity = $item['qty'];
     $subtotal = $item['price'] * $quantity;
 
@@ -85,22 +87,6 @@ foreach ($orderItems as $item) {
     }
     $stmt->close();
 }
-
-// OPTIONAL: Email receipt
-$subject = "Restoran Order Receipt";
-$message = "Thank you for your order!\n\n";
-$message .= "Order Date: $order_time\n";
-$message .= "Pickup Time: $pickup_time\n";
-if ($customer_address) $message .= "Shipping Address: $customer_address\n";
-$message .= "Payment Method: " . ($payment_method == "qr" ? "QR Code" : "Cash on Delivery") . "\n";
-$message .= "Order Status: $status\n\n";
-$message .= "Items:\n";
-foreach ($orderItems as $item) {
-    $message .= $item['name'] . " x" . $item['qty'] . " - RM" . number_format($item['price'] * $item['qty'], 2) . "\n";
-}
-$message .= "\nTotal: RM" . number_format($total_amount, 2);
-
-// mail($customer_email, $subject, $message); // optional
 
 // Respond with order_id
 echo json_encode(['order_id' => $order_id]);

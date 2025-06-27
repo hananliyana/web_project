@@ -54,3 +54,51 @@ addBtn.addEventListener('click', function () {
 });
     });
 }
+
+function renderCartItems() {
+    const cartContainer = document.querySelector('.cart-items');
+    const cartSummary = document.querySelector('.cart-summary h2');
+    let cart = getCart();
+
+    cartContainer.innerHTML = '';
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+        cartSummary.textContent = "Total: RM0.00";
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        total += item.price * item.qty;
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerHTML = `
+            <div class="cart-details">
+                <h3>${item.name}</h3>
+                <p>Price: RM${item.price.toFixed(2)}</p>
+                <p>Qty: ${item.qty}</p>
+                <p>Subtotal: RM${(item.price * item.qty).toFixed(2)}</p>
+                <button class="remove-btn" data-index="${index}">Remove</button>
+            </div>
+        `;
+        cartContainer.appendChild(itemDiv);
+    });
+
+    // Attach remove button handler
+    cartContainer.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const idx = parseInt(this.getAttribute('data-index'));
+            cart.splice(idx, 1);
+            saveCart(cart);
+            renderCartItems();
+        });
+    });
+
+    cartSummary.textContent = `Total: RM${total.toFixed(2)}`;
+}
+
+// Only run on cart.html
+if (document.querySelector('.cart-items')) {
+    renderCartItems();
+}

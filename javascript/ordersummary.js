@@ -1,7 +1,5 @@
-// Utility to get cart from localStorage
 function getCart() {
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    return cart ? JSON.parse(cart) : [];
+    return JSON.parse(localStorage.getItem("cart") || "[]");
 }
 
 function renderOrderSummary() {
@@ -29,7 +27,7 @@ function renderOrderSummary() {
             <span>RM${item.price.toFixed(2)}</span>
             <span>Subtotal: RM${(item.price * item.qty).toFixed(2)}</span>
         `;
-        orderItemsElem.appendChild(div); // <-- THIS LINE WAS MISSING
+        orderItemsElem.appendChild(div);
     });
 
     orderTotalElem.textContent = `Total: RM${total.toFixed(2)}`;
@@ -37,38 +35,56 @@ function renderOrderSummary() {
 
 document.addEventListener('DOMContentLoaded', function() {
     renderOrderSummary();
+    
     document.getElementById('checkout-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Step 1: Prevent default form submission
+        e.preventDefault();
 
-        // Step 2: Collect form data
+        const cart = getCart();
+        if (cart.length === 0) {
+            alert('Your cart is empty!');
+            return;
+        }
+
+        // Verify all items have IDs
+        if (cart.some(item => !item.item_id)) {
+            console.error('Cart items missing IDs:', cart);
+            alert('Some items in your cart are invalid. Please refresh and try again.');
+            return;
+        }
+
         const formData = new FormData(this);
+        const orderData = {
+            custName: formData.get('custName'),
+            email: formData.get('email'),
+            pickupTime: formData.get('pickupTime'),
+            address: formData.get('address'),
+            paymentMethod: formData.get('paymentMethod'),
+            cart: cart
+        };
 
-        // Step 3: Add cart data to formData
-        formData.set('orderData', JSON.stringify(getCart()));
-        console.log("Sending form data with cart:", getCart());
+        console.log('Submitting order:', orderData); // Debug log
 
-
-        // Step 4: Send AJAX request
-let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-fetch('php/submit_order.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `orderData=${encodeURIComponent(JSON.stringify(cart))}`
-})
-        .then(response => response.json())
+        fetch('../php/submit_order.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
         .then(data => {
-            // Step 5: Handle response
             if (data.order_id) {
-                sessionStorage.setItem('lastCart', JSON.stringify(getCart())); // ✅ save to sessionStorage
-                localStorage.removeItem('cart'); // optional if you want cart to be empty next time
+                sessionStorage.setItem('lastCart', JSON.stringify(cart));
+                localStorage.removeItem('cart');
                 window.location.href = `confirmation.html?order_id=${data.order_id}`;
-
             } else {
-                alert(data.error || 'Order failed!');
+                throw new Error(data.error || 'Unknown error');
             }
         })
-        .catch(() => {
-            alert('An error occurred. Please try again.');
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Order failed: ' + error.message);
         });
     });
 });
