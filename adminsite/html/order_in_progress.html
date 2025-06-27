@@ -11,7 +11,7 @@
         <div class="logo">🍴 DT Western Table Admin</div>
         <nav>
             <ul>
-                <li><a href="dashboard.html" id="dashboard-link">Dashboard</a></li>
+                <li><a href="homepage.html" id="dashboard-link">Dashboard</a></li>
                 <li><a href="pendingorder.html" id="pending-orders-link">Pending Orders</a></li>
                 <li><a href="order_in_progress.html" class="active">Orders In Progress</a></li>
                 <li><a href="order_to_pickup.html" id="order-to-pickup-link">Order To Pickup</a></li>
@@ -35,46 +35,21 @@
                 <thead>
                     <tr>
                         <th>Order ID</th>
-                        <th>Customer Name</th>
-                        <th>Items</th>
+                        <th>User ID</th>
+                        <th>Staff ID</th>
+                        <th>Table ID</th>
                         <th>Order Time</th>
-                        <th>Elapsed Time</th>
                         <th>Status</th>
+                        <th>Total Amount</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Example Row 1 -->
-                    <tr>
-                        <td>#1250</td>
-                        <td>Sarah Lee</td>
-                        <td>1x Cheeseburger</td>
-                        <td>1:20 PM</td>
-                        <td>08 mins</td>
-                        <td>
-                            <span class="badge badge-cooking">Cooking 🔥</span>
-                        </td>
-                        <td>
-                            <button type="button" class="mark-ready-btn">Mark Ready</button>
-                        </td>
-                    </tr>
-                    <!-- Example Row 2 -->
-                    <tr>
-                        <td>#1251</td>
-                        <td>Daniel K.</td>
-                        <td>2x Skewers</td>
-                        <td>1:25 PM</td>
-                        <td>03 mins</td>
-                        <td>
-                            <span class="badge badge-preparing">Preparing 🧑‍🍳</span>
-                        </td>
-                        <td>
-                            <button type="button" class="mark-ready-btn">Mark Ready</button>
-                        </td>
-                    </tr>
+                    <!-- Will be populated by JS -->
                 </tbody>
             </table>
         </section>
     </main>
+    <script src="../javascript/orderinprogress.js"></script>
 </body>
 </html>

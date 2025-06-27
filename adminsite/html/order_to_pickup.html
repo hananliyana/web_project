@@ -11,7 +11,7 @@
         <div class="logo">🍴 DT Western Table Admin</div>
         <nav>
             <ul>
-                 <li><a href="dashboard.html" id="dashboard-link">Dashboard</a></li>
+                <li><a href="homepage.html" id="dashboard-link">Dashboard</a></li>
                 <li><a href="pendingorder.html" id="pending-orders-link">Pending Orders</a></li>
                 <li><a href="order_in_progress.html" id="order-in-progress-link">Orders In Progress</a></li>
                 <li><a href="order_to_pickup.html" class="active">Order To Pickup</a></li>
@@ -23,64 +23,23 @@
 
     <main>
         <h1>Ready for Pickup</h1>
-
-        <!-- Search and Filter Bar -->
-        <div class="tools-bar">
-            <input type="text" placeholder="Search by Order ID, Customer Name, or Pickup Code" class="search-input">
-            <select class="waiting-filter">
-                <option value="">Filter by Waiting Time</option>
-                <option value="5">> 5 min</option>
-                <option value="10">> 10 min</option>
-            </select>
-        </div>
-
-        <!-- Ready for Pickup Table -->
         <table class="orders-table">
             <thead>
                 <tr>
                     <th>Order ID</th>
-                    <th>Customer Name</th>
-                    <th>Items</th>
-                    <th>Ready Time</th>
+                    <th>Item ID</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
                     <th>Waiting Time</th>
-                    <th>Pickup Code</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Example Row 1: New (green) -->
-                <tr>
-                    <td>#1260</td>
-                    <td>Aiman Lee</td>
-                    <td>2x Cheeseburger</td>
-                    <td>1:45 PM</td>
-                    <td>
-                        <span class="badge badge-green">05 mins</span>
-                    </td>
-                    <td>PCK-9831</td>
-                    <td><span class="status-badge status-awaiting">Awaiting</span></td>
-                    <td>
-                        <button type="button" class="pickedup-btn">Mark as Picked Up</button>
-                    </td>
-                </tr>
-                <!-- Example Row 2: Delayed (red) -->
-                <tr>
-                    <td>#1261</td>
-                    <td>Norah M.</td>
-                    <td>1x Skewer, 1x Salad</td>
-                    <td>1:42 PM</td>
-                    <td>
-                        <span class="badge badge-red">12 mins</span>
-                    </td>
-                    <td>PCK-1140</td>
-                    <td><span class="status-badge status-awaiting">Awaiting</span></td>
-                    <td>
-                        <button type="button" class="pickedup-btn">Mark as Picked Up</button>
-                    </td>
-                </tr>
+                <!-- Will be populated by JS -->
             </tbody>
         </table>
     </main>
+    <script src="../javascript/ordertopickup.js"></script>
 </body>
 </html>
