@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Summary - Restoran</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/order_summary.css">
+    <link rel="stylesheet" href="../css/ordersummary.css">
 </head>
 <body>
     <header class="navbar">
-        <div class="logo">🍴 <span>Restoran</span></div>
+        <div class="logo">🍴 <span>DT Western Table</span></div>
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
@@ -22,64 +22,48 @@
     </header>
 
     <main class="order-summary">
-        <div class="order-summary-box">
-            <h1>Order Summary</h1>
-            <div class="order-items">
-                <!-- Orders will be rendered here by JavaScript -->
-            </div>
-            <form id="checkout-form" action="../php/submit_order.php" method="POST">
-                <div class="form-group">
-                    <label for="custName">Name:</label>
-                    <input type="text" id="custName" name="custName" required>
-                </div>
-                <div class="form-group">
-                    <label for="pickupTime">Pickup Time:</label>
-                    <input type="time" id="pickupTime" name="pickupTime" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email (for receipt):</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Shipping Address (if delivery):</label>
-                    <textarea id="address" name="address" placeholder="Enter address if for delivery"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Payment Method:</label>
-                    <select id="paymentMethod" name="paymentMethod" required>
-                        <option value="qr">QR Code</option>
-                        <option value="cod">Cash on Delivery</option>
-                    </select>
-                </div>
-                <div class="form-group" id="qrSection" style="display:none;">
-                    <label>Scan to Pay (QR Code):</label>
-                    <img src="../images/your_qr.png" alt="QR Code" style="max-width:150px;">
-                    <p>After payment, please click Confirm & Pay.</p>
-                </div>
-                <input type="hidden" id="orderData" name="orderData">
-                <div class="order-total">
-                    <h2 id="order-total-rm">Total: RM0.00</h2>
-                </div>
-                <button type="submit" class="cta-btn">Confirm & Pay</button>
-            </form>
+    <div class="order-summary-card">
+        <h1>Order Summary</h1>
+        <div class="order-items">
+            <!-- Orders will be rendered here by JavaScript -->
         </div>
+        <form id="checkout-form" autocomplete="off">
+            <div class="form-group">
+                <label for="custName">Name:</label>
+                <input type="text" id="custName" name="custName" required>
+            </div>
+            <div class="form-group">
+                <label for="pickupTime">Pickup Time:</label>
+                <input type="time" id="pickupTime" name="pickupTime" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email (for receipt):</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Shipping Address (if delivery):</label>
+                <textarea id="address" name="address" placeholder="Enter address if for delivery"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Payment Method:</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="qr">QR Code</option>
+                    <option value="cod">Cash on Delivery</option>
+                </select>
+            </div>
+            <div class="form-group" id="qrSection" style="display:none;">
+                <label>Scan to Pay (QR Code):</label>
+                <img src="../images/qrtable1.png" alt="QR Code">
+                <p>After payment, please click Confirm & Pay.</p>
+            </div>
+            <input type="hidden" id="orderData" name="orderData" />
+            <div class="order-total">
+                <h2 id="order-total-rm">Total: RM0.00</h2>
+            </div>
+            <button type="submit" class="cta-btn">Confirm & Pay</button>
+        </form>
+    </div>
     </main>
     <script src="../javascript/ordersummary.js"></script>
-    <script>
-    // Payment method logic
-    document.addEventListener('DOMContentLoaded', function() {
-        var paySelect = document.getElementById('paymentMethod');
-        var qrSection = document.getElementById('qrSection');
-        paySelect.addEventListener('change', function() {
-            if (this.value === "qr") {
-                qrSection.style.display = "block";
-            } else {
-                qrSection.style.display = "none";
-            }
-        });
-        // Trigger change on load in case select is pre-filled
-        paySelect.dispatchEvent(new Event('change'));
-    });
-    </script>
 </body>
 </html>

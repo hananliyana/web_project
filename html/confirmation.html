@@ -6,10 +6,20 @@
     <title>Order Receipt - Restoran</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/confirmation.css">
+    <style>
+    /* Add some basic receipt styling, or keep your own CSS files */
+    .confirmation { max-width: 600px; margin: 2em auto; background: #fff; padding: 2em; border-radius: 8px; box-shadow: 0 2px 12px #0001;}
+    .receipt-details { margin-bottom: 1em; }
+    .receipt-details p { margin: 0.2em 0; }
+    table { width:100%; border-collapse: collapse; margin-top: 1em;}
+    th, td { padding: 8px; border-bottom: 1px solid #ccc; text-align: left;}
+    tfoot td { font-weight: bold; }
+    .cta-btn { display: inline-block; margin-top: 2em; background: #2a8f4a; color: #fff; padding: 0.7em 2em; text-decoration: none; border-radius: 4px; }
+    </style>
 </head>
 <body>
     <header class="navbar">
-        <div class="logo">🍴 <span>Restoran</span></div>
+        <div class="logo">🍴 <span>DT Western Table</span></div>
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
@@ -24,6 +34,84 @@
         <div id="receipt"></div>
         <a href="index.html" class="cta-btn">Back to Home</a>
     </main>
-    <script src="../javascript/confirmation.js"></script>
+    <footer>
+        <p>&copy; 2025 Restoran | All Rights Reserved</p>
+    </footer>
+    <script>
+    // Get order_id from URL
+    function getOrderId() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('order_id');
+    }
+
+    function renderReceipt(data) {
+        const receiptDiv = document.getElementById('receipt');
+        if (data.error) {
+            receiptDiv.innerHTML = `<p style="color:red">${data.error}</p>`;
+            return;
+        }
+        const order = data.order;
+        const items = data.order_items;
+        let html = `
+            <div class="receipt-details">
+                <p><strong>Name:</strong> ${order.customer_name || '-'}</p>
+                <p><strong>Email:</strong> ${order.customer_email || '-'}</p>
+                ${order.customer_address ? `<p><strong>Address:</strong> ${order.customer_address}</p>` : ''}
+                ${order.pickup_time && order.pickup_time !== '0000-00-00 00:00:00' ? `<p><strong>Pickup Time:</strong> ${order.pickup_time}</p>` : ''}
+                <p><strong>Order Time:</strong> ${order.order_time || '-'}</p>
+                <p><strong>Payment Method:</strong> ${order.payment_method ? order.payment_method.toUpperCase() : '-'}</p>
+                <p><strong>Status:</strong> ${order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : '-'}</p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        let total = 0;
+        items.forEach(item => {
+            const qty = item.quantity || item.qty || 1;
+            const subtotal = parseFloat(item.subtotal || item.price * qty || 0);
+            total += subtotal;
+            html += `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${qty}</td>
+                    <td>RM${subtotal.toFixed(2)}</td>
+                </tr>
+            `;
+        });
+        html += `
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td>RM${parseFloat(order.total_amount || total).toFixed(2)}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <p style="margin-top:18px;color:green;font-weight:bold;">Thank you for your order!</p>
+        `;
+        receiptDiv.innerHTML = html;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const order_id = getOrderId();
+        if (!order_id) {
+            document.getElementById('receipt').innerHTML = "<p>No order ID provided.</p>";
+            return;
+        }
+        fetch(`../php/confirmation.php?order_id=${encodeURIComponent(order_id)}`)
+            .then(response => response.json())
+            .then(data => renderReceipt(data))
+            .catch(() => {
+                document.getElementById('receipt').innerHTML = "<p>Failed to load order details.</p>";
+            });
+    });
+    </script>
 </body>
 </html>

@@ -1,11 +1,41 @@
-function getCart() {
-    const cart = localStorage.getItem('cart');
-    return cart ? JSON.parse(cart) : [];
-}
+// Fetch and render menu items, then attach cart logic
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('../php/menu.php')
+        .then(response => response.json())
+        .then(menu => {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = '';
+            if (!menu.length) {
+                grid.innerHTML = '<p>No menu items available.</p>';
+                return;
+            }
 
-function saveCart(cart) {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
+menu.forEach(item => {
+    grid.innerHTML += `
+    <div class="menu-item" 
+         data-id="${item.item_id}" 
+         data-name="${item.name}" 
+         data-price="${item.price}" 
+         data-img="${item.img}">
+        <img src="../images/${item.img}" alt="${item.name}">
+        <h3>${item.name}</h3>
+        <p>${item.description}</p>
+        <span>RM${Number(item.price).toFixed(2)}</span>
+        <div class="add-cart-controls">
+            <button class="qty-btn minus">-</button>
+            <span class="qty-number">1</span>
+            <button class="qty-btn plus">+</button>
+            <button class="add-cart-btn">Add to Cart</button>
+        </div>
+    </div>
+    `;
+});
+
+            setupMenuCartLogic(); // Attach event handlers after rendering
+        });
+});
+
+// Define all cart and quantity logic here
 function setupMenuCartLogic() {
     document.querySelectorAll('.menu-item').forEach(function(menuItem) {
         let qtyNumber = menuItem.querySelector('.qty-number');
@@ -14,8 +44,6 @@ function setupMenuCartLogic() {
         let addBtn = menuItem.querySelector('.add-cart-btn');
         let qty = 1;
 
-
-        // Plus/Minus event handlers
         minusBtn.addEventListener('click', function() {
             if (qty > 1) {
                 qty--;
@@ -23,12 +51,10 @@ function setupMenuCartLogic() {
             }
         });
 
-
         plusBtn.addEventListener('click', function() {
             qty++;
             qtyNumber.textContent = qty;
         });
-
 
 addBtn.addEventListener('click', function () {
     const item_id = parseInt(menuItem.getAttribute('data-id'));

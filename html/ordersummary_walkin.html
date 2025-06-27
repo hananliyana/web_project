@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Summary - DT Western Table</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">🍴 <span>DT Western Table</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="order_status.html">Track Order</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+    <a class="book-btn" href="#">Order Now</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text-box">
+      <div class="hero-text">
+        <h1>Your Order Summary</h1>
+        <div class="order-items" id="order-items" style="margin-top: 20px;">
+          <!-- JavaScript will populate items and quantities here -->
+        </div>
+        <div class="order-total" style="margin-top: 20px;">
+          <h2 id="order-total-rm">Total: RM0.00</h2>
+        </div>
+        <div class="cta-btn-group" style="margin-top: 30px;">
+          <a href="menu.html" class="cta-btn">Back to Menu</a>
+          <a href="order_status.html" class="cta-btn">Track Order</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="../javascript/ordersummary.js"></script>
+</body>
+</html>

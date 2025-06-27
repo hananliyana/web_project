@@ -1,0 +1,73 @@
+/* Main section background like hero */
+.choose-order-section {
+    background: url('../img/restaurant-bg.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* Box styling similar to hero-text */
+.choose-box {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 50px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.choose-box h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.choose-box p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* CTA Button Styling */
+.cta-btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    background-color: #e67e22;
+    color: white;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #cf711f;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .choose-box {
+        padding: 30px 20px;
+    }
+
+    .choose-box h1 {
+        font-size: 2rem;
+    }
+
+    .choose-box p {
+        font-size: 1rem;
+    }
+
+    .cta-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

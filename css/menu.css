@@ -1,5 +1,6 @@
 /* menu.css */
 
+
 .menu-section {
     padding: 60px;
     background-color: #1a1a1a;
@@ -7,11 +8,13 @@
     text-align: center;
 }
 
+
 .menu-title {
     font-size: 36px;
     margin-bottom: 40px;
     color: orange;
 }
+
 
 .menu-grid {
     display: grid;
@@ -19,6 +22,7 @@
     gap: 30px;
     justify-items: center;
 }
+
 
 .menu-item {
     background-color: #222;
@@ -30,9 +34,11 @@
     max-width: 300px;
 }
 
+
 .menu-item:hover {
     transform: translateY(-10px);
 }
+
 
 .menu-item img {
     width: 100%;
@@ -42,10 +48,12 @@
     margin-bottom: 15px;
 }
 
+
 .menu-item h3 {
     margin: 10px 0;
     color: white;
 }
+
 
 .menu-item p {
     font-size: 14px;
@@ -53,11 +61,13 @@
     margin-bottom: 10px;
 }
 
+
 .menu-item span {
     font-weight: bold;
     color: orange;
     font-size: 16px;
 }
+
 
 .add-cart-controls {
     display: flex;
@@ -66,6 +76,7 @@
     gap: 10px;
     margin-top: 10px;
 }
+
 
 .qty-btn {
     background: gold;
@@ -84,10 +95,12 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+
 .qty-btn:hover {
     background: orange;
     color: #fff;
 }
+
 
 .qty-number {
     width: 32px;
