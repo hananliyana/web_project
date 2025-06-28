@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Status - Restoran</title>
+    <title>Order History - Restoran</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/order_status.css">
 </head>
@@ -14,31 +14,41 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="menu.html">Menu</a></li>
-                <li><a href="order_status.html">Track Order</a></li>
-                 <li><a href="cart.html">Cart</a></li>
+                <li><a href="order_status.html">Order History</a></li>
+                <li><a href="cart.html">Cart</a></li>
             </ul>
         </nav>
         <a class="book-btn" href="#">Order Now</a>
     </header>
 
     <main class="order-status">
-        <h1>Track Your Order</h1>
+        <h1>Your Order History</h1>
         <div style="margin-bottom:32px;">
-            <input type="text" id="orderIdInput" placeholder="Enter Order ID" style="padding:10px; border-radius:4px; border:none; width:200px;"/>
-            <button id="checkStatusBtn" style="padding:10px 16px; margin-left:10px; border:none; border-radius:4px; background:orange; color:white; font-weight:bold;">Check Status</button>
+            <input type="email" id="emailInput" placeholder="Enter your email" style="padding:10px; border-radius:4px; border:none; width:250px;"/>
+            <button id="checkHistoryBtn" style="padding:10px 16px; margin-left:10px; border:none; border-radius:4px; background:orange; color:white; font-weight:bold;">Check History</button>
         </div>
-        <div class="status-box" id="statusBox" style="display:none;">
-            <p><strong>Order ID:</strong> <span id="orderIdText"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatusText"></span></p>
-            <div class="status-progress" id="statusProgress"></div>
+        <div id="historyBox" style="display:none;">
+            <table id="historyTable" style="width:100%; border-collapse:collapse;">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total (RM)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Orders will be inserted here -->
+                </tbody>
+            </table>
         </div>
-        <div id="statusNotFound" style="display:none; color:orange; margin-top:24px;">
-            Order not found. Please check your Order ID.
+        <div id="historyNotFound" style="display:none; color:orange; margin-top:24px;">
+            No orders found for this email.
         </div>
     </main>
     <footer>
         <p>&copy; 2025 Restoran | All Rights Reserved</p>
     </footer>
-    <script src="../javascript/order_status.js"></script>
+    <script src="../javascript/order_history.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
+
 function setupMenuCartLogic() {
     document.querySelectorAll('.menu-item').forEach(function(menuItem) {
         let qtyNumber = menuItem.querySelector('.qty-number');
@@ -29,29 +30,28 @@ function setupMenuCartLogic() {
             qtyNumber.textContent = qty;
         });
 
+        addBtn.addEventListener('click', function () {
+            const item_id = Number(menuItem.getAttribute('data-id')); // Ensure item_id is a number
+            const name = menuItem.getAttribute('data-name');
+            const price = parseFloat(menuItem.getAttribute('data-price'));
+            const img = menuItem.getAttribute('data-img');
 
-addBtn.addEventListener('click', function () {
-    const item_id = parseInt(menuItem.getAttribute('data-id'));
-    const name = menuItem.getAttribute('data-name');
-    const price = parseFloat(menuItem.getAttribute('data-price'));
-    const img = menuItem.getAttribute('data-img');
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existing = cart.find(item => Number(item.item_id) === item_id); // Compare as numbers
 
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existing = cart.find(item => item.item_id === item_id);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ item_id, name, price, qty, img });
+            }
 
-    if (existing) {
-        existing.qty += qty;
-    } else {
-        cart.push({ item_id, name, price, qty, img });
-    }
+            localStorage.setItem('cart', JSON.stringify(cart));
 
-    localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${qty} x ${name} added to cart!`);
 
-    qty = 1;
-    qtyNumber.textContent = qty;
-
-    alert(`${qty} x ${name} added to cart!`);
-});
+            qty = 1;
+            qtyNumber.textContent = qty;
+        });
     });
 }
 
