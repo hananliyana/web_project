@@ -1,8 +1,8 @@
 <?php
 require '../../dbConnection.php';
 
-// Fetch only 'in_progress' orders
-$sql = "SELECT order_id,user_id, staff_id, table_id, order_type, order_time, status, total_amount, payment_method FROM `order` WHERE status = 'in_progress'";
+// Fetch only 'completed' and 'cancel' orders
+$sql = "SELECT order_id, user_id, staff_id, table_id, order_type, order_time, status, total_amount, payment_method FROM `order` WHERE status IN ('completed', 'cancel')";
 $result = $conn->query($sql);
 
 $orders = [];

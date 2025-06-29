@@ -8,23 +8,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${order.order_id}</td>
-                    <td>${order.user_id}</td>
-                    <td>${order.staff_id}</td>
-                    <td>${order.table_id ?? '-'}</td>
-                    <td>${order.order_time}</td>
-                    <td>${order.status}</td>
-                    <td>${order.total_amount}</td>
-                    <td><button type="button" class="mark-ready-btn" data-order-id="${order.order_id}">Mark as Ready</button></td>
+                    <td>${order.user_id ?? ''}</td>
+                    <td>${order.staff_id ?? ''}</td>
+                    <td>${order.table_id ?? ''}</td>
+                    <td>${order.order_type ?? ''}</td>
+                    <td>${order.order_time ?? ''}</td>
+                    <td class="status-td">${order.status ?? ''}</td>
+                    <td>${order.total_amount ?? ''}</td>
+                    <td>${order.payment_method ?? ''}</td>
+                    <td>
+                        <button type="button" class="mark-ready-btn" data-order-id="${order.order_id}">Mark as Ready</button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            // (Optional) You can add event listeners for the Mark Ready buttons here
+            // Attach event listeners for Mark as Ready buttons
             document.querySelectorAll('.mark-ready-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const orderId = btn.getAttribute('data-order-id');
-                    // Add your AJAX call to mark the order as ready here
-                    alert('Mark Ready clicked for order ID: ' + orderId);
+                    if (!confirm('Are you sure you want to mark this order as ready?')) return;
+
+                    fetch('../php/markasready.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ order_id: orderId })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.success) {
+                            btn.closest('tr').remove();
+                            alert('Order marked as Ready and will appear in Order To Pickup!');
+                        } else {
+                            alert('Failed to mark order as Ready: ' + (result.error || 'Unknown error'));
+                        }
+                    })
+                    .catch(() => alert('Failed to communicate with server.'));
                 });
             });
         });
