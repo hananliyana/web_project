@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $order_id = $_POST['order_id'] ?? '';
 
     if ($order_id !== '') {
-        $stmt = $conn->prepare("UPDATE `order` SET status = 'complete' WHERE order_id = ?");
+        $stmt = $conn->prepare("UPDATE `order` SET status = 'completed' WHERE order_id = ?");
         $stmt->bind_param("i", $order_id);
         if ($stmt->execute()) {
             echo json_encode(['success' => true]);

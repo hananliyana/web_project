@@ -27,6 +27,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `menuitem`
 --
 
+CREATE DATABASE IF NOT EXISTS `webdev` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `webdev`;
+
 CREATE TABLE `menuitem` (
   `item_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,

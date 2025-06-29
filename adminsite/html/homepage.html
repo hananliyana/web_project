@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Dashboard</title>
     <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/popup-modal.css">
 </head>
+
 <body>
     <header>
         <div class="logo">🍴 DT Western Table Admin</div>
@@ -26,24 +29,24 @@
 
         <!-- 1. Summary Cards -->
         <div class="summary-cards">
-            <div class="summary-card" style="border-color: orange;">
-                <span>158</span>
+            <div class="summary-card" id="total-orders-card" style="border-color: orange;">
+                <span id="total-orders">0</span>
                 <div class="label">Total Orders Today</div>
             </div>
             <div class="summary-card pending">
-                <span>8</span>
+                <span id="pending-orders">0</span>
                 <div class="label">Pending Orders</div>
             </div>
             <div class="summary-card inprogress">
-                <span>5</span>
+                <span id="inprogress-orders">0</span>
                 <div class="label">Orders In Progress</div>
             </div>
             <div class="summary-card ready">
-                <span>3</span>
+                <span id="ready-orders">0</span>
                 <div class="label">Ready for Pickup</div>
             </div>
             <div class="summary-card revenue">
-                <span>RM 1,920.50</span>
+                <span id="total-revenue">RM 0.00</span>
                 <div class="label">Total Revenue Today</div>
             </div>
         </div>
@@ -55,44 +58,32 @@
                 <thead>
                     <tr>
                         <th>Order ID</th>
-                        <th>Customer</th>
                         <th>Status</th>
                         <th>Time</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>#1234</td>
-                        <td>John D.</td>
-                        <td><span class="badge badge-inprogress">In Progress</span></td>
-                        <td>1:32 PM</td>
-                        <td><button class="action-btn">View/Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td>#1235</td>
-                        <td>Sarah L.</td>
-                        <td><span class="badge badge-pending">Pending</span></td>
-                        <td>1:40 PM</td>
-                        <td><button class="action-btn">View/Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td>#1236</td>
-                        <td>David T.</td>
-                        <td><span class="badge badge-ready">Ready for Pickup</span></td>
-                        <td>1:46 PM</td>
-                        <td><button class="action-btn">View/Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td>#1233</td>
-                        <td>Emma S.</td>
-                        <td><span class="badge badge-completed">Completed</span></td>
-                        <td>1:25 PM</td>
-                        <td><button class="action-btn">View/Edit</button></td>
-                    </tr>
+                <tbody id="activity-table-body">
+                    <!-- Will be populated by JS -->
                 </tbody>
             </table>
         </section>
+
+        <!-- Order Details Modal -->
+    <div id="order-modal-overlay"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); align-items:center; justify-content:center; z-index:1000;">
+        <div id="order-modal"
+            style="background:#fff; border-radius:8px; padding:24px; min-width:320px; max-width:95vw; position:relative;">
+            <button id="close-order-modal"
+                style="position:absolute; top:8px; right:8px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            <h2>Order Details</h2>
+            <div id="order-modal-content">
+                Loading...
+            </div>
+        </div>
+    </div>
     </main>
+    <script src="../javascript/homepage.js"></script>
 </body>
+
 </html>

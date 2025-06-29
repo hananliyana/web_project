@@ -25,14 +25,14 @@
         <h1>Completed Orders</h1>
 
         <!-- Filters & Tools -->
-<div class="tools-bar">
-    <input type="text" class="search-input" placeholder="Search by Order ID, Customer Name, or Payment Method">
-    <select class="sort-select">
-        <option value="date">Sort by Date</option>
-        <option value="price">Sort by Price</option>
-        <option value="type">Sort by Order Type</option>
-    </select>
-</div>
+        <div class="tools-bar">
+            <input type="text" class="search-input" placeholder="Search by Order ID">
+            <select class="sort-select">
+                <option value="date">Sort by Date</option>
+                <option value="price">Sort by Price</option>
+                <option value="type">Sort by Order Type</option>
+            </select>
+        </div>
 
         <!-- Completed Orders Table -->
         <table class="orders-table">
@@ -56,7 +56,7 @@
         </table>
     </main>
 
-    <!-- View Details Modal 
+    <!-- View Details Modal -->
     <div class="modal-overlay" id="modal-overlay" style="display:none;">
         <div class="modal" id="order-modal">
             <button class="close-modal" id="close-modal">&times;</button>
@@ -65,24 +65,12 @@
                 <div class="modal-section">
                     <strong>Items:</strong>
                     <ul id="modal-items-list">
-                        //Will be filled by JS
+                        <!-- Will be filled by JS -->
                     </ul>
-                </div>
-                <div class="modal-section">
-                    <strong>Time Taken To Complete:</strong>
-                    <div id="modal-time-taken"></div>
-                </div>
-                <div class="modal-section">
-                    <strong>Customer Notes:</strong>
-                    <div id="modal-notes"></div>
-                </div>
-                <div class="modal-section">
-                    <strong>Payment Method:</strong>
-                    <div id="modal-payment"></div>
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
     <script src="../javascript/orderhistory.js"></script>
 </body>
 </html>
