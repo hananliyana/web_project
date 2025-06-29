@@ -1,12 +1,12 @@
 <?php
 require_once("dbConnection.php");
-
 header('Content-Type: application/json');
 
 $order_id = $_GET['order_id'] ?? null;
+
 if (!$order_id) {
-    echo json_encode(['error' => 'No order ID provided.']);
-    exit();
+    echo json_encode(['error' => 'Missing order ID']);
+    exit;
 }
 
 // Fetch order
@@ -18,23 +18,28 @@ $order = $result->fetch_assoc();
 $stmt->close();
 
 if (!$order) {
-    echo json_encode(['error' => 'Order not found.']);
-    exit();
+    echo json_encode(['error' => 'Order not found']);
+    exit;
 }
 
 // Fetch order items
-$stmt = $conn->prepare("SELECT oi.*, mi.name FROM orderitem oi JOIN menuitem mi ON oi.item_id = mi.item_id WHERE oi.order_id = ?");
+$stmt = $conn->prepare("
+    SELECT oi.quantity, oi.subtotal, mi.name 
+    FROM orderitem oi 
+    JOIN menuitem mi ON oi.item_id = mi.item_id 
+    WHERE oi.order_id = ?
+");
 $stmt->bind_param("i", $order_id);
 $stmt->execute();
 $items_result = $stmt->get_result();
+
 $order_items = [];
 while ($row = $items_result->fetch_assoc()) {
     $order_items[] = $row;
 }
-$stmt->close();
 
 echo json_encode([
     'order' => $order,
     'order_items' => $order_items
 ]);
-exit();
+?>

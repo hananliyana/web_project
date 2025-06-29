@@ -1,16 +1,15 @@
-// Utility to get cart from localStorage
 function getCart() {
-    const cart = localStorage.getItem('cart');
-    return cart ? JSON.parse(cart) : [];
+    return JSON.parse(localStorage.getItem("cart") || "[]");
 }
 
 function renderOrderSummary() {
+    console.log(getCart());
     const orderItemsElem = document.querySelector('.order-items');
     const orderTotalElem = document.getElementById('order-total-rm');
     let cart = getCart();
-    let total = 0;
 
     orderItemsElem.innerHTML = '';
+    let total = 0;
 
     if (cart.length === 0) {
         orderItemsElem.innerHTML = '<p>Your cart is empty.</p>';
@@ -23,9 +22,10 @@ function renderOrderSummary() {
         const div = document.createElement('div');
         div.className = 'order-item';
         div.innerHTML = `
-            <span class="item-name">${item.name}</span>
-            <span class="item-qty">x${item.qty}</span>
-            <span class="item-price">RM${(item.price * item.qty).toFixed(2)}</span>
+            <span>${item.name}</span>
+            <span>Qty: ${item.qty}</span>
+            <span>RM${item.price.toFixed(2)}</span>
+            <span>Subtotal: RM${(item.price * item.qty).toFixed(2)}</span>
         `;
         orderItemsElem.appendChild(div);
     });
@@ -35,26 +35,56 @@ function renderOrderSummary() {
 
 document.addEventListener('DOMContentLoaded', function() {
     renderOrderSummary();
+    
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    // Payment method logic
-    var paySelect = document.getElementById('paymentMethod');
-    var qrSection = document.getElementById('qrSection');
-    paySelect.addEventListener('change', function() {
-        if (this.value === "qr") {
-            qrSection.style.display = "block";
-        } else {
-            qrSection.style.display = "none";
+        const cart = getCart();
+        if (cart.length === 0) {
+            alert('Your cart is empty!');
+            return;
         }
-    });
-    paySelect.dispatchEvent(new Event('change'));
 
-    // Before submit, put cart JSON into hidden input
-    const form = document.getElementById('checkout-form');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            const cart = getCart();
-            document.getElementById('orderData').value = JSON.stringify(cart);
-            // Let form submit to PHP
+        // Verify all items have IDs
+        if (cart.some(item => !item.item_id)) {
+            console.error('Cart items missing IDs:', cart);
+            alert('Some items in your cart are invalid. Please refresh and try again.');
+            return;
+        }
+
+        const formData = new FormData(this);
+        const orderData = {
+            custName: formData.get('custName'),
+            email: formData.get('email'),
+            pickupTime: formData.get('pickupTime'),
+            address: formData.get('address'),
+            paymentMethod: formData.get('paymentMethod'),
+            cart: cart
+        };
+
+        console.log('Submitting order:', orderData); // Debug log
+
+        fetch('../php/submit_order.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            if (data.order_id) {
+                sessionStorage.setItem('lastCart', JSON.stringify(cart));
+                localStorage.removeItem('cart');
+                window.location.href = `confirmation.html?order_id=${data.order_id}`;
+            } else {
+                throw new Error(data.error || 'Unknown error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Order failed: ' + error.message);
         });
-    }
+    });
 });

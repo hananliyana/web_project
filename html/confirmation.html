@@ -6,6 +6,16 @@
     <title>Order Receipt - Restoran</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/confirmation.css">
+    <style>
+    /* Add some basic receipt styling, or keep your own CSS files */
+    .confirmation { max-width: 600px; margin: 2em auto; background: #fff; padding: 2em; border-radius: 8px; box-shadow: 0 2px 12px #0001;}
+    .receipt-details { margin-bottom: 1em; }
+    .receipt-details p { margin: 0.2em 0; }
+    table { width:100%; border-collapse: collapse; margin-top: 1em;}
+    th, td { padding: 8px; border-bottom: 1px solid #ccc; text-align: left;}
+    tfoot td { font-weight: bold; }
+    .cta-btn { display: inline-block; margin-top: 2em; background: #2a8f4a; color: #fff; padding: 0.7em 2em; text-decoration: none; border-radius: 4px; }
+    </style>
 </head>
 <body>
     <header class="navbar">
@@ -14,7 +24,7 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="menu.html">Menu</a></li>
-                <li><a href="order_status.html">Track Order</a></li>
+                <li><a href="order_status.html">Order History</a></li>
                 <li><a href="cart.html">Cart</a></li>
             </ul>
         </nav>
@@ -35,37 +45,43 @@
     }
 
     function renderReceipt(data) {
+        const receiptDiv = document.getElementById('receipt');
         if (data.error) {
-            document.getElementById('receipt').innerHTML = `<p>${data.error}</p>`;
+            receiptDiv.innerHTML = `<p style="color:red">${data.error}</p>`;
             return;
         }
         const order = data.order;
         const items = data.order_items;
         let html = `
             <div class="receipt-details">
-                <p><strong>Name:</strong> ${order.customer_name}</p>
-                <p><strong>Email:</strong> ${order.customer_email}</p>
-                <p><strong>Pickup Time:</strong> ${order.pickup_time}</p>
-                <p><strong>Payment Method:</strong> ${order.payment_method}</p>
+                <p><strong>Name:</strong> ${order.customer_name || '-'}</p>
+                <p><strong>Email:</strong> ${order.customer_email || '-'}</p>
+                ${order.customer_address ? `<p><strong>Address:</strong> ${order.customer_address}</p>` : ''}
+                ${order.pickup_time && order.pickup_time !== '0000-00-00 00:00:00' ? `<p><strong>Pickup Time:</strong> ${order.pickup_time}</p>` : ''}
+                <p><strong>Order Time:</strong> ${order.order_time || '-'}</p>
+                <p><strong>Payment Method:</strong> ${order.payment_method ? order.payment_method.toUpperCase() : '-'}</p>
+                <p><strong>Status:</strong> ${order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : '-'}</p>
             </div>
             <table>
                 <thead>
                     <tr>
                         <th>Item</th>
                         <th>Qty</th>
-                        <th>Price</th>
                         <th>Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
+        let total = 0;
         items.forEach(item => {
+            const qty = item.quantity || item.qty || 1;
+            const subtotal = parseFloat(item.subtotal || item.price * qty || 0);
+            total += subtotal;
             html += `
                 <tr>
                     <td>${item.name}</td>
-                    <td>${item.quantity}</td>
-                    <td>RM${parseFloat(item.price).toFixed(2)}</td>
-                    <td>RM${(item.price * item.quantity).toFixed(2)}</td>
+                    <td>${qty}</td>
+                    <td>RM${subtotal.toFixed(2)}</td>
                 </tr>
             `;
         });
@@ -73,13 +89,14 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3">Total</td>
-                        <td>RM${parseFloat(order.total_amount).toFixed(2)}</td>
+                        <td colspan="2">Total</td>
+                        <td>RM${parseFloat(order.total_amount || total).toFixed(2)}</td>
                     </tr>
                 </tfoot>
             </table>
+            <p style="margin-top:18px;color:green;font-weight:bold;">Thank you for your order!</p>
         `;
-        document.getElementById('receipt').innerHTML = html;
+        receiptDiv.innerHTML = html;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
