@@ -35,7 +35,22 @@ function renderOrderSummary() {
 
 document.addEventListener('DOMContentLoaded', function() {
     renderOrderSummary();
-    
+
+    // QR Section toggle logic
+    const paymentMethod = document.getElementById('paymentMethod');
+    const qrSection = document.getElementById('qrSection');
+
+    function toggleQRSection() {
+        if (paymentMethod.value === 'qr') {
+            qrSection.style.display = '';
+        } else {
+            qrSection.style.display = 'none';
+        }
+    }
+
+    paymentMethod.addEventListener('change', toggleQRSection);
+    toggleQRSection(); // Run on page load
+
     document.getElementById('checkout-form').addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -56,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const orderData = {
             custName: formData.get('custName'),
             email: formData.get('email'),
-            pickupTime: formData.get('pickupTime'),
+            // pickupTime: formData.get('pickupTime'), // Remove if not used
             address: formData.get('address'),
             paymentMethod: formData.get('paymentMethod'),
             cart: cart

@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Summary - Restoran</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/ordersummary.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Summary - Restoran</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/ordersummary.css" />
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">🍴 <span>DT Western Table</span></div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="order_status.html">Order History</a></li>
-                <li><a href="cart.html">Cart</a></li>
-            </ul>
-        </nav>
-        <a class="book-btn" href="#">Order Now</a>
-    </header>
+  <header class="navbar">
+    <div class="logo">🍴 <span>DT Western Table</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="order_status.html">Order History</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+    <a class="book-btn" href="#">Order Now</a>
+  </header>
 
-    <main class="order-summary">
+  <main class="order-summary">
     <div class="order-summary-card">
-        <h1>Order Summary</h1>
-        <div class="order-items">
-            <!-- Orders will be rendered here by JavaScript -->
+      <h1>Order Summary</h1>
+      <div class="order-items"><!-- Filled by JS --></div>
+
+      <form id="checkout-form" autocomplete="off">
+        <div class="form-group">
+          <label for="custName">Name:</label>
+          <input type="text" id="custName" name="custName" required />
         </div>
-        <form id="checkout-form" autocomplete="off">
-            <div class="form-group">
-                <label for="custName">Name:</label>
-                <input type="text" id="custName" name="custName" required>
-            </div>
-            <div class="form-group">
-                <label for="pickupTime">Pickup Time:</label>
-                <input type="time" id="pickupTime" name="pickupTime" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email (for receipt):</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="address">Shipping Address (if delivery):</label>
-                <textarea id="address" name="address" placeholder="Enter address if for delivery"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Payment Method:</label>
-                <select id="paymentMethod" name="paymentMethod" required>
-                    <option value="qr">QR Code</option>
-                    <option value="cod">Cash on Delivery</option>
-                </select>
-            </div>
-            <div class="form-group" id="qrSection" style="display:none;">
-                <label>Scan to Pay (QR Code):</label>
-                <img src="../images/qrtable1.png" alt="QR Code">
-                <p>After payment, please click Confirm & Pay.</p>
-            </div>
-            <input type="hidden" id="orderData" name="orderData" />
-            <div class="order-total">
-                <h2 id="order-total-rm">Total: RM0.00</h2>
-            </div>
-            <button type="submit" class="cta-btn">Confirm & Pay</button>
-        </form>
+        <div class="form-group">
+          <label for="email">Email (for receipt):</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="address">Shipping Address (if delivery):</label>
+          <textarea id="address" name="address" placeholder="Enter address if for delivery"></textarea>
+        </div>
+
+        <!-- Payment Method (Radio Buttons) -->
+        <div class="form-group">
+          <label>Payment Method:</label><br />
+          <input type="radio" id="paymentQR" name="paymentMethod" value="qr" required />
+          <label for="paymentQR">QR Code</label><br />
+          <input type="radio" id="paymentCOD" name="paymentMethod" value="cod" required />
+          <label for="paymentCOD">Cash on Delivery</label>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="form-group" id="qrSection" style="display: none;">
+          <label>Scan to Pay (QR Code):</label><br />
+          <img src="../images/qrpayment.jpg" alt="QR Code" style="max-width:150px;">
+
+          <p>After payment, please click Confirm & Pay.</p>
+        </div>
+
+        <div class="order-total">
+          <h2 id="order-total-rm">Total: RM0.00</h2>
+        </div>
+        <button type="submit" class="cta-btn">Confirm & Pay</button>
+      </form>
     </div>
-    </main>
-    <script src="../javascript/ordersummary.js"></script>
+  </main>
+
+  <script src="../javascript/ordersummary.js"></script>
 </body>
 </html>

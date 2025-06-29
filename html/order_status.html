@@ -28,19 +28,7 @@
             <button id="checkHistoryBtn" style="padding:10px 16px; margin-left:10px; border:none; border-radius:4px; background:orange; color:white; font-weight:bold;">Check History</button>
         </div>
         <div id="historyBox" style="display:none;">
-            <table id="historyTable" style="width:100%; border-collapse:collapse;">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Total (RM)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Orders will be inserted here -->
-                </tbody>
-            </table>
+            <div id="orderTimeline" class="order-timeline"></div>
         </div>
         <div id="historyNotFound" style="display:none; color:orange; margin-top:24px;">
             No orders found for this email.

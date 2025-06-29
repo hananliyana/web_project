@@ -14,18 +14,25 @@ document.getElementById('checkHistoryBtn').addEventListener('click', function() 
     .then(data => {
         const box = document.getElementById('historyBox');
         const notFound = document.getElementById('historyNotFound');
-        const tbody = document.querySelector('#historyTable tbody');
-        tbody.innerHTML = '';
+        const timeline = document.getElementById('orderTimeline');
+        timeline.innerHTML = '';
         if (data.orders && data.orders.length > 0) {
             data.orders.forEach(order => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${order.order_id}</td>
-                    <td>${order.order_time}</td>
-                    <td>${order.status}</td>
-                    <td>${Number(order.total_amount).toFixed(2)}</td>
+                // Choose color class based on status
+                let statusClass = 'status-pending';
+                if (order.status === 'success' || order.status === 'completed') statusClass = 'status-success';
+                if (order.status === 'failed' || order.status === 'cancelled') statusClass = 'status-failed';
+
+                const div = document.createElement('div');
+                div.className = 'timeline-card';
+                div.innerHTML = `
+                    <span class="timeline-dot ${statusClass}"></span>
+                    <div class="timeline-status-badge ${statusClass}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</div>
+                    <div class="timeline-amount">RM${Number(order.total_amount).toFixed(2)}</div>
+                    <div class="timeline-date">${order.order_time}</div>
+                    <div class="timeline-order-id">Order #${order.order_id}</div>
                 `;
-                tbody.appendChild(tr);
+                timeline.appendChild(div);
             });
             box.style.display = '';
             notFound.style.display = 'none';
