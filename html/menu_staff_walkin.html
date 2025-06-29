@@ -6,8 +6,22 @@
     <title>Menu - Restoran</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/phone_popup.css">
+
+
+
+
 </head>
 <body>
+        <!-- Phone Number Popup -->
+<div id="phoneOverlay">
+  <div id="phonePopup">
+    <h3>Enter Your Phone Number</h3>
+    <input type="text" id="phoneInput" placeholder="e.g. 0123456789" />
+    <br />
+    <button onclick="submitPhone()">Submit</button>
+  </div>
+</div>
     <header class="navbar">
         <div class="logo">🍴 <span>DT Western Table</span></div>
         <nav>
@@ -88,6 +102,63 @@
   }
 </script>
 <script src="../javascript/cart_walkin.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+    localStorage.clear();
+});
+
+  // Only show popup if no user_id in localStorage
+  window.onload = () => {
+    if (localStorage.getItem("user_id")) {
+      document.getElementById("phoneOverlay").style.display = "none";
+    }
+  };
+
+function submitPhone() {
+  const phone = document.getElementById("phoneInput").value.trim();
+
+  if (!phone.match(/^\d{10,12}$/)) {
+    alert("Please enter a valid phone number");
+    return;
+  }
+
+  fetch('../php/insert_user_walkin.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ phone: phone })
+  })
+  .then(response => {
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error("Not JSON response");
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.success) {
+      localStorage.setItem("user_id", data.user_id);
+      localStorage.setItem("table_id", tableId); // if not already set
+      localStorage.removeItem("order_submitted"); // ✅ Allow new submission
+      localStorage.removeItem("submitted_cart");  // ✅ Reset old cart
+      localStorage.removeItem("submitted_total");
+
+      document.getElementById("phoneOverlay").style.display = "none";
+      console.log("User ID saved:", data.user_id);
+    } else {
+      alert("Error saving phone number. Please try again.");
+    }
+  })
+  .catch(error => {
+    console.error("Error submitting phone number:", error);
+    alert("An error occurred. Please try again.");
+  });
+}
+
+
+</script>
 
 </body>
 </html>

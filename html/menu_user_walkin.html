@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Restoran</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/phone_popup.css">
+
+
+
+
+</head>
+<body>
+        <!-- Phone Number Popup -->
+<div id="phoneOverlay">
+  <div id="phonePopup">
+    <h3>Enter Your Phone Number</h3>
+    <input type="text" id="phoneInput" placeholder="e.g. 0123456789" />
+    <br />
+    <button onclick="submitPhone()">Submit</button>
+  </div>
+</div>
+    <header class="navbar">
+        <div class="logo">🍴 <span>DT Western Table</span></div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu_walkin.html" class="active">Menu</a></li>
+                <li><a href="order_status.html">Track Order</a></li>
+                <li><a href="cart_walkin.html">Cart</a></li>
+            </ul>
+        </nav>
+        <a class="book-btn" href="#">Order Now</a>
+    </header>
+
+    <main class="menu-section">
+        <h1 class="menu-title">Our Menu</h1>
+        <div class="menu-grid">
+            <div class="menu-item" data-name="Grilled Steak" data-price="19.99" data-img="steak.jpg">
+                <img src="../images/steak.jpg" alt="Grilled Steak">
+                <h3>Grilled Steak</h3>
+                <p>Juicy grilled steak with rosemary</p>
+                <span>RM19.99</span>
+                <div class="add-cart-controls">
+                    <button class="qty-btn minus">-</button>
+                    <span class="qty-number">1</span>
+                    <button class="qty-btn plus">+</button>
+                    <button class="add-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-name="Cheeseburger" data-price="12.99" data-img="burger.jpg">
+                <img src="../images/burger.jpg" alt="Cheeseburger">
+                <h3>Cheeseburger</h3>
+                <p>Classic beef cheeseburger with fries</p>
+                <span>RM12.99</span>
+                <div class="add-cart-controls">
+                    <button class="qty-btn minus">-</button>
+                    <span class="qty-number">1</span>
+                    <button class="qty-btn plus">+</button>
+                    <button class="add-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-name="Fresh Salad" data-price="9.99" data-img="salad.jpg">
+                <img src="../images/salad.jpg" alt="Fresh Salad">
+                <h3>Fresh Salad</h3>
+                <p>Mixed greens with vinaigrette dressing</p>
+                <span>RM9.99</span>
+                <div class="add-cart-controls">
+                    <button class="qty-btn minus">-</button>
+                    <span class="qty-number">1</span>
+                    <button class="qty-btn plus">+</button>
+                    <button class="add-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+            <div class="menu-item" data-name="BBQ Skewers" data-price="14.99" data-img="skewers.jpg">
+                <img src="../images/skewers.jpg" alt="BBQ Skewers">
+                <h3>BBQ Skewers</h3>
+                <p>Grilled meat and veggie skewers</p>
+                <span>RM14.99</span>
+                <div class="add-cart-controls">
+                    <button class="qty-btn minus">-</button>
+                    <span class="qty-number">1</span>
+                    <button class="qty-btn plus">+</button>
+                    <button class="add-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+     <script>
+  // Read table_id from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const tableId = urlParams.get('table_id');
+
+  // Optional: use or store it for other features
+  if (tableId) {
+    console.log("Table ID from URL:", tableId);
+    localStorage.setItem("table_id", tableId); // can be used by cart.js or others
+  } else {
+    console.warn("No table_id found in URL");
+  }
+</script>
+<script src="../javascript/cart_walkin.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+    localStorage.clear();
+});
+
+  // Only show popup if no user_id in localStorage
+  window.onload = () => {
+    if (localStorage.getItem("user_id")) {
+      document.getElementById("phoneOverlay").style.display = "none";
+    }
+  };
+
+function submitPhone() {
+  const phone = document.getElementById("phoneInput").value.trim();
+
+  if (!phone.match(/^\d{10,12}$/)) {
+    alert("Please enter a valid phone number");
+    return;
+  }
+
+  fetch('../php/insert_user_walkin.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ phone: phone })
+  })
+  .then(response => {
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error("Not JSON response");
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.success) {
+      localStorage.setItem("user_id", data.user_id);
+      localStorage.setItem("table_id", tableId); // if not already set
+      localStorage.removeItem("order_submitted"); // ✅ Allow new submission
+      localStorage.removeItem("submitted_cart");  // ✅ Reset old cart
+      localStorage.removeItem("submitted_total");
+
+      document.getElementById("phoneOverlay").style.display = "none";
+      console.log("User ID saved:", data.user_id);
+    } else {
+      alert("Error saving phone number. Please try again.");
+    }
+  })
+  .catch(error => {
+    console.error("Error submitting phone number:", error);
+    alert("An error occurred. Please try again.");
+  });
+}
+
+
+</script>
+
+</body>
+</html>
